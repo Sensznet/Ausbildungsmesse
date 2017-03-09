@@ -1,0 +1,18 @@
+h3 {
+	font-size:   1.2em;
+	text-align: center;
+}
+
+div {
+	text-align: center;
+}
+
+table {
+	border-color: black;
+	border-style: solid;
+	width: 50%;
+	text-align: center;
+	margin-left: 25%;
+	margin-right: 25%;
+}
+

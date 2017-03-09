@@ -1,3 +1,3 @@
-<a href="/ausbildungsmesse/?view=impressum">
+<a href="?view=impressum">
     Impressum
 </a>

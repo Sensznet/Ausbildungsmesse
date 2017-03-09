@@ -40,7 +40,7 @@ div.Headline2 {
 div.Body {
     background-color: white;
     width: 95%;
-    height: 65%;
+    min-height: 65%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -78,10 +78,12 @@ nav ul {
     background-color: grey;
 }
 nav li {
-    margin: 0.4em; 
+    margin-top: 0.4em; 
+    margin-bottom: 0.4em; 
     display: inline-block;
-    padding: 0.2em;
-    width: 32%;
+    width: 33%;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
     text-align: center;
 }
 nav a {
@@ -93,4 +95,11 @@ nav a {
 nav a:hover,
 nav a:active {
     color: white; 
+}
+
+.button {
+    background: grey;
+    font-weight: bold;
+    color: gold;
+
 }

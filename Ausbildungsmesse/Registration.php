@@ -22,7 +22,7 @@ class Registration {
     public function getDialog($error) {
         $smarty = new Smarty();
         $smarty ->assign('error',$error);
-        $betriebsRepository = new BetriebRepository();
+        $betriebsRepository = new BetriebRepository(); 
         $betrieb = $betriebsRepository->findOneBy(['ID' => $_SESSION['betriebsID']]);
         $smarty->assign('betrieb', $betrieb);
         $smarty->display('Template/registration.tpl');

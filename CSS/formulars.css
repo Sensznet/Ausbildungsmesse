@@ -16,3 +16,10 @@ table {
 	margin-right: 25%;
 }
 
+input, textarea, select {
+    width: 200px;
+}
+
+textarea {
+    height: 75px;
+}

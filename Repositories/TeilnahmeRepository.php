@@ -16,14 +16,14 @@ class TeilnahmeRepository {
     public function findBy($array, $betrieb = null) {
         $db = new DB();
         $betriebRepository = new BetriebRepository();
-        $sqlArrays = $db->find('tblTeilnahme', ['BetriebID' => $sqlArray['ID']]);
+        $sqlArrays = $db->find('tblTeilnahme', $array);
         $array = [];
         foreach($sqlArrays as $sqlArray) {
-            if(betrieb == null) {
+            if($betrieb == null) {
                 $betrieb = $betriebRepository->findOneBy(["ID" => $sqlArray['BetriebID']]);
             }
-            $teilnahme = new Teilnahme($betrieb, $sqlArray['Teilnahme'], $sqlArray['Flaeche'], $sqlArray['Raum'], $sqlArray['Strom'], $sqlArray['Bemerkung'], $sqlArray['ID']);
-            if($betrieb->getTeilnahme == null) {
+            $teilnahme = new Teilnahme($betrieb, $sqlArray['Teilnahme'], $sqlArray['Flaeche'], $sqlArray['Raum'], $sqlArray['Strom'], $sqlArray['Bemerkung'], $sqlArray['info'], $sqlArray['ID']);
+            if($betrieb->getTeilnahme() == null) {
                 $betrieb->setTeilnahme($teilnahme);
             }
             $array[] = $teilnahme;
@@ -33,25 +33,29 @@ class TeilnahmeRepository {
 
     public function findOneBy($array, $betrieb = null){
         $db = new DB();
+        $teilnahme = null;
         $betriebRepository = new BetriebRepository();
         $sqlArray = $db->findOne('tblTeilnahme', $array);
-        if(betrieb == null) {
+        if(is_array($sqlArray)) {
+            if($betrieb == null) {
             $betrieb = $betriebRepository->findOneBy(["ID" => $sqlArray['BetriebID']]);
-        }
-        $teilnahme = new Teilnahme($betrieb, $sqlArray['Teilnahme'], $sqlArray['Flaeche'], $sqlArray['Raum'], $sqlArray['Strom'], $sqlArray['Bemerkung'], $sqlArray['ID']);
-        if($betrieb->getTeilnahme == null) {
-            $betrieb->setTeilnahme($teilnahme);
+            }
+            $teilnahme = new Teilnahme($betrieb, $sqlArray['Teilnahme'], $sqlArray['Flaeche'], $sqlArray['Raum'], $sqlArray['Strom'], $sqlArray['Bemerkung'], $sqlArray['info'], $sqlArray['ID']);
+            if($betrieb->getTeilnahme() == null) {
+                $betrieb->setTeilnahme($teilnahme);
+            }
         }
         return $teilnahme;
     }
 
     public function persist(Teilnahme $teilnahme) {
-        if($betrieb->getID() == null) {
+         $db = new DB();
+        if($teilnahme->getID() == null) {
             $db->createEntity('tblTeilnahme', ['BetriebID' => $teilnahme->getBetrieb()->getID(),'Teilnahme' => $teilnahme->getTeilnahme(), 'Flaeche' => $teilnahme->getFlaeche(), 'Raum' => $teilnahme->getRaum(), 'Strom' => $teilnahme->getStrom(),
-                                                'Bemerkung' => $teilnahme->getBemerkung()]);
+                                                'Bemerkung' => $teilnahme->getBemerkung(), 'info' => $teilnahme->getInfo()]);
         } else {
             $db->updateEntity('tblTeilnahme', ['BetriebID' => $teilnahme->getBetrieb()->getID(),'Teilnahme' => $teilnahme->getTeilnahme(), 'Flaeche' => $teilnahme->getFlaeche(), 'Raum' => $teilnahme->getRaum(), 'Strom' => $teilnahme->getStrom(),
-                                                'Bemerkung' => $teilnahme->getBemerkung()], ["ID" => $teilnahme->getID()]);
+                                                'Bemerkung' => $teilnahme->getBemerkung(), 'info' => $teilnahme->getInfo()], ["ID" => $teilnahme->getID()]);
         }
     }
 }

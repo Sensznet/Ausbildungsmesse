@@ -19,8 +19,9 @@ class Teilnahme {
     private $raum;
     private $strom;
     private $bemerkung;
+    private $info;
     
-    public function __construct(Betrieb $betrieb, $teilnahme, $flaeche, $raum, $strom, $bemerkung, $id = null) {
+    public function __construct(Betrieb $betrieb, $teilnahme, $flaeche, $raum, $strom, $bemerkung, $info, $id = null) {
         $this->betrieb = $betrieb;
         $this->teilnahme = $teilnahme;
         $this->flaeche = $flaeche;
@@ -28,19 +29,19 @@ class Teilnahme {
         $this->strom = $strom;
         $this->bemerkung = $bemerkung;
         $this->id = $id;
+        $this->info = $info;
     }
     
     public function getID() {
         return $this->id;
     }
     
-    /**
-     * @return Betrieb
-     */
+    /** @return Betrieb */
     public function getBetrieb() {
         return $this->betrieb;
     }
     
+    /** @return bool */
     public function getTeilnahme() {
         return $this->teilnahme;
     }
@@ -53,12 +54,17 @@ class Teilnahme {
         return $this->raum;
     }
     
+    /** @return bool */
     public function getStrom() {
         return $this->strom;
     }
     
     public function getBemerkung() {
-        return $this->Bemerkung;
+        return $this->bemerkung;
+    }
+    
+    public function getInfo() {
+        return $this->info;
     }
     
     public function setTeilnahme($teilnahme) {
@@ -79,5 +85,9 @@ class Teilnahme {
     
     public function setBemerkung($bemerkung) {
         $this->bemerkung = $bemerkung;
+    }
+    
+    public function setInfo($info) {
+        $this->info = $info;
     }
 }

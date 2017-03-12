@@ -18,27 +18,24 @@ class Ansprechpartner {
     private $fax;
     private $telefon;
     private $name;
+    private $vorname;
 
 
-    public function __construct($betrieb, $email, $fax, $telefon, $name, $id = NULL){
+    public function __construct($betrieb, $email, $fax, $telefon, $name, $vorname, $id = NULL){
         $this->id = $id;
         $this->betrieb = $betrieb;
         $this->email = $email;
         $this->fax = $fax;
         $this->telefon = $telefon;
         $this->name = $name;
-
-        if(is_null(id)){
-            $db = new DB();
-            $db ->createEntity('tblBetrieb', ['BetriebID' => $this->betrieb->getId(), 'Email' => $this->email, 'Fax' => $this->fax,
-                                              'ID' => $this->id, 'Name' => $this->name, 'Telefon' => $this->telefon]);
-        }
+        $this->vorname = $vorname;
     }
 
-    public function getId() {
+    public function getID() {
         return $this->id;
     }
 
+    /** @return Betrieb */
     public function getBetrieb() {
         return $this->betrieb;
     }
@@ -58,6 +55,10 @@ class Ansprechpartner {
     public function getName() {
         return $this->name;
     }
+    
+    public function getVorname() {
+        return $this->vorname;
+    }
 
     public function setEmail($email) {
         $this->email = $email;
@@ -73,5 +74,9 @@ class Ansprechpartner {
 
     public function setName($name) {
         $this->name = $name;
+    }
+    
+    public function setVorname($vorname) {
+        $this->vorname = $vorname;
     }
 }

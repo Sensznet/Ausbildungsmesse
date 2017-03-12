@@ -11,6 +11,7 @@
         <div class="Headline2">
             <h2>Firmen</h2>
         </div>
+        {$betriebe|@print_r}
     </div>
     <div class="Feet">
         {include file="Template/feet.tpl"}

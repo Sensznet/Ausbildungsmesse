@@ -13,36 +13,51 @@ class AnsprechpartnerRepository {
 
     }
 
-    public function findBy($array) {
+    public function findBy($array, $betrieb = null) {
         $db = new DB();
-        $sqlArrays = $db->find('tblTeilnahme', ['BetriebID' => $sqlArray['ID']]);
+        $betriebRepository = new BetriebRepository();
+        $sqlArrays = $db->find('tblansprechpartner', $array);
         $array = [];
         foreach($sqlArrays as $sqlArray) {
-            $betrieb = $betriebRepository->findOneBy(["ID" => $sqlArray['BetriebID']]);
-            $teilnahme = new Teilnahme($betrieb, $sqlArray['Name'], $sqlArray['Telefon'], $sqlArray['Fax'], $sqlArray['Email'], $tei, $sqlArray['ID']);
-            $betrieb->setTeilnahme($teilnahme);
-            $array[] = $teilnahme;
+            if($betrieb == null) {
+                $betrieb = $betriebRepository->findOneBy(["ID" => $sqlArray['BetriebID']]);
+            }
+            $ansprechpartner = new Ansprechpartner($betrieb, $sqlArray['Email'], $sqlArray['Fax'], $sqlArray['Telefon'], $sqlArray['Name'], $sqlArray['Vorname'], $sqlArray['ID']);
+            if($betrieb->getAnsprechpartner() == null) {
+                $betrieb->setAnsprechpartner($ansprechpartner);
+            }
+            $array[] = $ansprechpartner;
         }
         return $array;
     }
 
-    public function findOneBy($array){
+    public function findOneBy($array, $betrieb = null){
         $db = new DB();
-        $sqlArray = $db->findOne('tblTeilnahme', $array);
+        $ansprechpartner = null;
         $betriebRepository = new BetriebRepository();
-        $betrieb = $betriebRepository->findOneBy(["ID" => $sqlArray['BetriebID']]);
-        $teilnahme = new Teilnahme($betrieb, $sqlArray['Name'], $sqlArray['Telefon'], $sqlArray['Fax'], $sqlArray['Email'], $tei, $sqlArray['ID']);
-        $betrieb->setTeilnahme($teilnahme);
-        return $teilnahme;
+        $sqlArray = $db->findOne('tblansprechpartner', $array);
+        if(is_array($sqlArray)) {
+            if($betrieb == null) {
+            $betrieb = $betriebRepository->findOneBy(["ID" => $sqlArray['BetriebID']]);
+            }
+            $ansprechpartner = new Ansprechpartner($betrieb, $sqlArray['Email'], $sqlArray['Fax'], $sqlArray['Telefon'], $sqlArray['Name'], $sqlArray['Vorname'], $sqlArray['ID']);
+            if($betrieb->getAnsprechpartner() == null) {
+                $betrieb->setAnsprechpartner($ansprechpartner);
+            }
+        }
+        return $ansprechpartner;
     }
 
-    public function persist(Teilnahme $teilnahme) {
-        if($betrieb->getID() == null) {
-            $db->createEntity('tblTeilnahme', ['BetriebID' => $teilnahme->getBetrieb()->getID(),'Teilnahme' => $teilnahme->getTeilnahme(), 'Flaeche' => $teilnahme->getFlaeche(), 'Raum' => $teilnahme->getRaum(), 'Strom' => $teilnahme->getStrom(),
-                                                'Bemerkung' => $teilnahme->getBemerkung()]);
+    public function persist(Ansprechpartner $ansprechpartner) {
+         $db = new DB();
+        if($ansprechpartner->getID() == null) {
+            $db ->createEntity('tblansprechpartner', ['BetriebID' => $ansprechpartner->getBetrieb()->getID(), 'Email' => $ansprechpartner->getEmail(), 
+                'Fax' => $ansprechpartner->getFax(), 'Name' => $ansprechpartner->getName(), 'Vorname' => $ansprechpartner->getVorname(), 
+                'Telefon' => $ansprechpartner->getTelefon()]);
         } else {
-            $db->updateEntity('tblTeilnahme', ['BetriebID' => $teilnahme->getBetrieb()->getID(),'Teilnahme' => $teilnahme->getTeilnahme(), 'Flaeche' => $teilnahme->getFlaeche(), 'Raum' => $teilnahme->getRaum(), 'Strom' => $teilnahme->getStrom(),
-                                                'Bemerkung' => $teilnahme->getBemerkung()], ["ID" => $teilnahme->getID()]);
+            $db ->updateEntity('tblansprechpartner', ['BetriebID' => $ansprechpartner->getBetrieb()->getID(), 'Email' => $ansprechpartner->getEmail(), 
+                'Fax' => $ansprechpartner->getFax(), 'Name' => $ansprechpartner->getName(), 'Vorname' => $ansprechpartner->getVorname(), 
+                'Telefon' => $ansprechpartner->getTelefon()], ["ID" => $ansprechpartner->getID()]);
         }
     }
 }

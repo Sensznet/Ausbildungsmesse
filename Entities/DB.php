@@ -44,6 +44,7 @@ class DB {
             $sql .= $key . '="' . $value . '"';
         }
         $sql .= ' WHERE ';
+        $first = true;
         foreach($bedingungen as $key => $value) {
             if($first) {
                 $first = false;
@@ -56,10 +57,11 @@ class DB {
     }
     
     public function find($objectName,array $values) {
-        $sql = sprintf('SELECT * FROM %s WHERE ', $objectName);
+        $sql = sprintf('SELECT * FROM %s ', $objectName);
         $first = true;
         foreach($values as $key => $value) {
             if($first) {
+                $sql .= 'WHERE ';
                 $first = false;
             } else {
                 $sql .= '&& ';
@@ -68,17 +70,18 @@ class DB {
         }
         $result = $this->db->query($sql);
         $array = [];
-        while($obeject = $result->fetch_array()) {
+        while($object = $result->fetch_array()) {
             $array[] = $object;
         }
         return $array;
     }
     
     public function findOne($objectName,array $values) {
-        $sql = sprintf('SELECT * FROM %s WHERE ', $objectName);
+        $sql = sprintf('SELECT * FROM %s ', $objectName);
         $first = true;
         foreach($values as $key => $value) {
             if($first) {
+                $sql .= 'WHERE ';
                 $first = false;
             } else {
                 $sql .= '&& ';

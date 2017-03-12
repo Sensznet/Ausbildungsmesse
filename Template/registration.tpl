@@ -12,7 +12,7 @@
         <div class="headline2">
             <h2>Registrierung</h2>
         </div>
-            <form action="/ausbildungsmesse/index.php?method=registration" method="POST">
+            <form action="?view=panel&method=registration" method="POST">
                 <div class="Formular">
                     <table>
                         {*<tr>
@@ -79,7 +79,15 @@
                         </tr>
                         <tr>
                             <th>
-                                <label for="street">Stra&szlige: </label>
+                                <label for="plz">Postleitzahl: </label>
+                            </th>
+                            <th>
+                                <input type="text"id="plz" name="plz" value="{$betrieb->getPlz()}" placeholder="00000" required>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="street">Straße: </label>
                             </th>
                             <th>
                                 <input type="text"id="street" name="street" value="{$betrieb->getStraße()}" placeholder="Straße" required>
@@ -104,7 +112,7 @@
                                 <label for="partnersurname">Vorame: </label>
                             </th>
                             <th>
-                                <input type="text" id="partnersurname" name="partnersurname" placeholder="Max" required>
+                                <input type="text" id="partnersurname" name="partnersurname" value="{if !is_null($betrieb->getAnsprechpartner())}{$betrieb->getAnsprechpartner()->getVorname()}{/if}" placeholder="Max" required>
                             </th>
                         </tr>
                         <tr>
@@ -112,7 +120,7 @@
                                 <label for="partnername">Nachname: </label>
                             </th>
                             <th>
-                                <input type="text" id="partnername" name="partnername" placeholder="Mustermann" required>
+                                <input type="text" id="partnername" name="partnername" value="{if !is_null($betrieb->getAnsprechpartner())}{$betrieb->getAnsprechpartner()->getName()}{/if}" placeholder="Mustermann" required>
                             </th>
                         </tr>
                         <tr>
@@ -120,10 +128,10 @@
                                 <label for="partnertel">Telefon: </label>
                             </th>
                             <th>
-                                <input type="tel" id="partnertel" name="partnertel" placeholder="0123/456789" required>
+                                <input type="tel" id="partnertel" name="partnertel" value="{if !is_null($betrieb->getAnsprechpartner())}{$betrieb->getAnsprechpartner()->getTelefon()}{/if}" placeholder="0123/456789" required>
                                 {if isset($error["partnertel"])}
                                     {$error["partnertel"]}
-                                    {/if}
+                                {/if}
                             </th>
                         </tr>
                         <tr>
@@ -131,7 +139,7 @@
                                 <label for="partnerfax">Fax: </label>
                             </th>
                             <th>
-                                <input type="tel" id="partnerfax" name="partnerfax" placeholder="0123/456789">
+                                <input type="tel" id="partnerfax" name="partnerfax" value="{if !is_null($betrieb->getAnsprechpartner())}{$betrieb->getAnsprechpartner()->getFax()}{/if}" placeholder="0123/456789">
                             </th>
                         </tr>
                         <tr>
@@ -139,10 +147,64 @@
                                 <label for="partneremail">E-Mailadresse: </label>
                             </th>
                             <th>
-                                <input type="email" id="partneremail" name="partneremail" placeholder="max@mustermann.de" required>
+                                <input type="email" id="partneremail" name="partneremail" value="{if !is_null($betrieb->getAnsprechpartner())}{$betrieb->getAnsprechpartner()->getEmail()}{/if}" placeholder="max@mustermann.de" required>
                                 {if isset($error["partneremail"])}
                                     {$error["partneremail"]}
-                                    {/if}
+                                {/if}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="2">
+                                <br></br>
+                                <h3>Teilnahme</h3>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="teilnahme">Teilnahme: </label>
+                            </th>
+                            <th>
+                                <select type="text" name="teilnahme" required>
+                                    <option hidden></option>
+                                    <option value="1" {if !is_null($betrieb->getTeilnahme()) && $betrieb->getTeilnahme()->getTeilnahme()}selected{/if}>Ja</option>
+                                    <option value="0" {if !is_null($betrieb->getTeilnahme()) && !$betrieb->getTeilnahme()->getTeilnahme()}selected{/if}>Nein</option>
+                                </select>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="flaeche">Benötigte Fläche: </label>
+                            </th>
+                            <th>
+                                <input type="number" name="flaeche" step="0.1" placeholder="m²" value="{if !is_null($betrieb->getTeilnahme())}{$betrieb->getTeilnahme()->getFlaeche()}{/if}" required>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="strom">Strom: </label>
+                            </th>
+                            <th>
+                                <select type="text" name="strom" required>
+                                    <option hidden></option>
+                                    <option value="1" {if !is_null($betrieb->getTeilnahme()) && $betrieb->getTeilnahme()->getStrom()}selected{/if}>Ja</option>
+                                    <option value=0" {if !is_null($betrieb->getTeilnahme()) && !$betrieb->getTeilnahme()->getStrom()}selected{/if}>Nein</option>
+                                </select>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="bemerkung">Bemerkung/Wünsche: </label>
+                            </th>
+                            <th>
+                                <textarea name="bemerkung">{if !is_null($betrieb->getTeilnahme())}{$betrieb->getTeilnahme()->getBemerkung()}{/if}</textarea>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="info">Info Text: </label>
+                            </th>
+                            <th>
+                                <textarea name="info">{if !is_null($betrieb->getTeilnahme())}{$betrieb->getTeilnahme()->getInfo()}{/if}</textarea>
                             </th>
                         </tr>
                         <tr height="200">

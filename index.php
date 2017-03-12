@@ -11,11 +11,14 @@ require_once 'Login.php';
 require_once 'Home.php';
 require_once 'Betriebe.php';
 require_once 'Impressum.php';
+require_once 'Registration.php';
 require_once 'Entities/DB.php';
 require_once 'Entities/Teilnahme.php';
 require_once 'Entities/Betrieb.php';
-require_once 'Registration.php';
+require_once 'Entities/Ansprechpartner.php';
 require_once 'Repositories/BetriebRepository.php';
+require_once 'Repositories/AnsprechpartnerRepository.php';
+require_once 'Repositories/TeilnahmeRepository.php';
 
 class Index {
 

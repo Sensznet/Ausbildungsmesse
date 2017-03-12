@@ -19,6 +19,8 @@ class Betrieb {
     private $ort;
     private $homepage;
     private $teilnahme;
+    private $ansprechpartner;
+    private $plz;
     
     public function getID() {
         return $this->id;
@@ -34,14 +36,16 @@ class Betrieb {
      * @param Teilnahme|null $teilnahme
      * @param int|null $id
      */
-    public function __construct($nr, $name, $straße, $ort, $homepage,$teilnahme = NULL, $id = NULL) {
+    public function __construct($nr, $name, $straße, $ort, $homepage, $plz, $id = NULL, $teilnahme = NULL, $ansprechpartner = NULL) {
         $this->nr = $nr;
         $this->id = $id;
         $this->name = $name;
         $this->straße = $straße;
         $this->ort = $ort;
         $this->homepage = $homepage;
+        $this->plz = $plz;
         $this->teilnahme = $teilnahme;
+        $this->ansprechpartner = $ansprechpartner;
     }
     
     public function getNr() {
@@ -64,8 +68,16 @@ class Betrieb {
         return $this->name;
     }
     
+    public function getPlz() {
+        return $this->plz;
+    }
+    
     public function getTeilnahme() {
-        return $this->teilname;
+        return $this->teilnahme;
+    }
+    
+    public function getAnsprechpartner() {
+        return $this->ansprechpartner;
     }
     
     public function setStraße($straße) {
@@ -84,8 +96,16 @@ class Betrieb {
         $this->name = $name;
     }
     
-    public function setTeilnahme(Teilnahme $teilnahme) {
+    public function setPlz($plz) {
+        $this->plz = $plz;
+    }
+    
+    public function setTeilnahme($teilnahme) {
         $this->teilnahme = $teilnahme;
-    } 
+    }
+    
+    public function setAnsprechpartner($ansprechpartner) {
+        $this->ansprechpartner = $ansprechpartner;
+    }
 }
 

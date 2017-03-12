@@ -29,7 +29,6 @@ class Registration {
     }
     
     public function edit() {
-        var_dump($_POST);
        $eMailpattern = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
        $numberPattern = "/^(\+[0-9]{2,3}|0+[0-9]{2,5}).+[\d\s\/\(\)-]/";
        $error = [];
@@ -42,6 +41,47 @@ class Registration {
         }
         if((!preg_match($numberPattern, $_POST['partnertel']))){
             $error['partnertel'] = 'Bitte eine gültige Telefonnummer eingeben.';
+        }
+        /** Wenn keine Fehler dann Formular Speichern */
+        if(count($error) == 0) {
+            /** Speicher Betrieb */
+            $betriebsRepository = new BetriebRepository();
+            $betrieb = $betriebsRepository->findOneBy(['ID' => $_SESSION['betriebsID']]);
+            $betrieb->setName($_POST['name']);
+            $betrieb->setOrt($_POST['location']);
+            $betrieb->setStraße($_POST['street']);
+            $betrieb->setHomepage($_POST['hp']);
+            $betrieb->setPlz($_POST['plz']);
+            $betriebsRepository->persist($betrieb);
+            
+            /** Speicher Ansprechpartner */
+            if(!is_a($betrieb->getAnsprechpartner(), "Ansprechpartner")) {
+                $ansprechpartner = new Ansprechpartner($betrieb, $_POST['partneremail'], $_POST['partnerfax'], $_POST['partnertel'],  
+                        $_POST['partnername'], $_POST['partnersurname']);
+            } else {
+                $ansprechpartner = $betrieb->getAnsprechpartner();
+                $ansprechpartner->setEmail($_POST['partneremail']);
+                $ansprechpartner->setFax($_POST['partnerfax']);
+                $ansprechpartner->setTelefon( $_POST['partnertel']);
+                $ansprechpartner->setName($_POST['partnername']);
+                $ansprechpartner->setVorname($_POST['partnersurname']);
+            }
+            $ansprechpartnerRepository = new AnsprechpartnerRepository();
+            $ansprechpartnerRepository->persist($ansprechpartner);
+            
+            /** Speicher Teilnahme */
+            if(!is_a($betrieb->getTeilnahme(), "Teilnahme")) {
+                $teilnahme = new Teilnahme($betrieb, $_POST['teilnahme'], $_POST['flaeche'], null, $_POST['strom'], $_POST['bemerkung'], $_POST['info']);
+            } else {
+                $teilnahme = $betrieb->getTeilnahme();
+                $teilnahme->setTeilnahme($_POST['teilnahme']);
+                $teilnahme->setFlaeche($_POST['flaeche']);
+                $teilnahme->setStrom($_POST['strom']);
+                $teilnahme->setBemerkung($_POST['bemerkung']);
+                $teilnahme->setInfo($_POST['info']);
+            }
+            $teilnahmeRepository = new TeilnahmeRepository();
+            $teilnahmeRepository->persist($teilnahme);
         }
         return $error;
 }

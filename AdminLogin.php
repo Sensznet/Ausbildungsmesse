@@ -13,7 +13,7 @@ require_once 'Smarty/Smarty.class.php';
  *
  * @author 14senszst1201
  */
-class AdminLogin {
+class Login {
     
     /**
      * 
@@ -21,7 +21,7 @@ class AdminLogin {
      */
     public function getDialog() {
         $smarty = new Smarty();
-        $smarty->display('Template/login.tpl');
+        $smarty->display('Template/adminlogin.tpl');
     }
     
     /**
@@ -29,17 +29,17 @@ class AdminLogin {
      * @param int $betriebsNr
      */
     public function anmeldung($betriebsNr) {
-        if(!isset($_SESSION['betriebsID'])) {
+        /**if(!isset($_SESSION['betriebsID'])) {
             $betriebRepository = new BetriebRepository();
             $betrieb = $betriebRepository->findOneBy(['Nr' => $betriebsNr]);
             if($betrieb instanceof Betrieb) {
                $_SESSION['betriebsID'] = $betrieb->getID();
             }
-        }
+        }*/
         
     }
 
     public function abmeldung() {
-        unset($_SESSION['betriebsID']);
+        unset($_SESSION['adminid']);
     }
 }

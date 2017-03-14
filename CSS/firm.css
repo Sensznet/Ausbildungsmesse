@@ -1,0 +1,16 @@
+table.Companys {
+    width: 100%;
+}
+
+table.Companys td {
+    text-align: center;
+}
+
+table.Companys tr:nth-child(odd) {
+    background-color: grey;
+    color: white;
+}
+
+table.Companys th {
+    color: gold;
+}

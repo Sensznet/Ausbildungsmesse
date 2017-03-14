@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 12. Mrz 2017 um 15:19
--- Server-Version: 10.1.21-MariaDB
--- PHP-Version: 5.6.30
+-- Erstellungszeit: 14. Mrz 2017 um 11:10
+-- Server-Version: 10.1.16-MariaDB
+-- PHP-Version: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -41,7 +41,8 @@ CREATE TABLE `tblansprechpartner` (
 --
 
 INSERT INTO `tblansprechpartner` (`BetriebID`, `Vorname`, `Name`, `Telefon`, `Fax`, `Email`, `ID`) VALUES
-(1, 'Stefan', 'Maier', '0945/43345', '0945/43522', 'ssensz@gmx.de', 1);
+(1, 'Stefan', 'Maier', '0945/43345', '0945/43522', 'test@test.de', 1),
+(2, 'Der', 'Troller', '01234/56789', '01234/56789', 'troll@troll.de', 2);
 
 -- --------------------------------------------------------
 
@@ -64,7 +65,8 @@ CREATE TABLE `tblbetrieb` (
 --
 
 INSERT INTO `tblbetrieb` (`Nr`, `Name`, `ID`, `Strasse`, `Ort`, `Plz`, `Homepage`) VALUES
-(0, 'Das Team', 1, 'MusterstraÃŸe 6', 'Lichtenfels', 96215, 'https://www.dasteam.de');
+(0, 'Das Team', 1, 'MusterstraÃŸe 6', 'Lichtenfels', 96215, 'https://www.dasteam.de'),
+(1337, 'Die Firma', 2, 'BlubstraÃŸe 1', 'Trollhausen', 12345, 'https://www.die-firma.de');
 
 -- --------------------------------------------------------
 
@@ -88,7 +90,8 @@ CREATE TABLE `tblteilnahme` (
 --
 
 INSERT INTO `tblteilnahme` (`Teilnahme`, `Flaeche`, `Raum`, `Strom`, `Bemerkung`, `BetriebID`, `ID`, `info`) VALUES
-(1, 5, 0, 1, 'Internet', 1, 1, 'Test');
+(1, 5, 0, 1, 'Internet', 1, 1, 'Wir sind das Team'),
+(1, 1, 0, 1, 'Nichts', 2, 2, 'Wir sind das Team');
 
 --
 -- Indizes der exportierten Tabellen
@@ -124,17 +127,17 @@ ALTER TABLE `tblteilnahme`
 -- AUTO_INCREMENT für Tabelle `tblansprechpartner`
 --
 ALTER TABLE `tblansprechpartner`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT für Tabelle `tblbetrieb`
 --
 ALTER TABLE `tblbetrieb`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT für Tabelle `tblteilnahme`
 --
 ALTER TABLE `tblteilnahme`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints der exportierten Tabellen
 --

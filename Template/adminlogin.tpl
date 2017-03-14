@@ -1,6 +1,6 @@
 <head>
     {include file="Template/head.tpl"}
-    <title>Login</title>
+    <title>Admin-Login</title>
     <link rel="stylesheet" href="CSS\login.css" type="text/css">
 </head>
 <body>

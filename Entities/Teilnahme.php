@@ -50,6 +50,7 @@ class Teilnahme {
         return $this->flaeche;
     }
     
+    /** @return bool */
     public function getRaum() {
         return $this->raum;
     }
@@ -75,10 +76,12 @@ class Teilnahme {
         $this->flaeche = $flaeche;
     }
     
+    /** bool $raum */
     public function setRaum($raum) {
         $this->raum = $raum;
     }
     
+    /** bool $strom */
     public function setStrom($strom) {
         $this->strom = $strom;
     }

@@ -29,7 +29,7 @@ class Registration {
     }
     
     public function edit() {
-       $eMailpattern = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
+       $eMailpattern = '/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,3})$/';
        $numberPattern = "/^(\+[0-9]{2,3}|0+[0-9]{2,5}).+[\d\s\/\(\)-]/";
        $error = [];
 
@@ -79,6 +79,7 @@ class Registration {
                 $teilnahme->setStrom($_POST['strom']);
                 $teilnahme->setBemerkung($_POST['bemerkung']);
                 $teilnahme->setInfo($_POST['info']);
+                $teilnahme->setRaum($_POST['raum']);
             }
             $teilnahmeRepository = new TeilnahmeRepository();
             $teilnahmeRepository->persist($teilnahme);

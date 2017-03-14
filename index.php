@@ -8,6 +8,7 @@
  */
 
 require_once 'Login.php';
+require_once 'AdminLogin.php';
 require_once 'Home.php';
 require_once 'Betriebe.php';
 require_once 'Impressum.php';
@@ -56,45 +57,56 @@ class Index {
                 $registration = new Registration();
                 $registration->getDialog($error);
                 break;
-			case 'login':
-				$login = new Login();
+            case 'login':
+                $login = new Login();
                 $login->getDialog();
-				break;
-			case 'betriebe':
-				$betriebe = new betriebe();
-				$betriebe->getDialog();
-				break;
-      case 'impressum':
-        $impressum = new Impressum();
-        $impressum->getDialog();
-        break;
-      default:
-        $home = new Home();
-				$home->getDialog();
-				break;
+                break;
+            case 'adminlogin':
+                $adminlogin = new AdminLogin();
+                $adminlogin->getDialog();
+            case 'betriebe':
+                $betriebe = new betriebe();
+                $betriebe->getDialog();
+                break;
+            case 'impressum':
+              $impressum = new Impressum();
+              $impressum->getDialog();
+              break;
+            default:
+                $home = new Home();
+                $home->getDialog();
+                break;
       }
       return $content;
     }
 
     private function calculateView() {
         $view = 'home';
-    		if(isset($_GET['view'])) {
-    			switch($_GET['view']) {
-    				case 'panel':
-    					if(isset($_SESSION['betriebsID']) && is_numeric($_SESSION['betriebsID'])) {
-    					   $view = 'registration';
-    					} else {
-    						$view = 'login';
-    					}
-    					break;
-    				case 'betriebe':
-    					$view = 'betriebe';
-    					break;
-            case 'impressum':
-              $view = 'impressum';
-              break;
-    			}
-    		}
+        if(isset($_GET['view'])) {
+            switch($_GET['view']) {
+                case 'panel':
+                    if(isset($_SESSION['betriebsID']) && is_numeric($_SESSION['betriebsID'])) {
+                       $view = 'registration';
+                    } else {
+                            $view = 'login';
+                    }
+                    break;
+                case 'adminpanel':
+                    if(isset($_SESSION['adminid']) && is_numeric($_SESSION['adminid'])) {
+                       $view = 'adminpanel';
+                    } else {
+                        $view = 'adminlogin';
+                    }
+                    break;
+                case 'betriebe':
+                    $view = 'betriebe';
+                    break;
+                case 'impressum':
+                  $view = 'impressum';
+                  break;
+            }
+        }
+        var_dump($view);
         return $view;
     }
 }
